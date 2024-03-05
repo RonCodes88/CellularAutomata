@@ -7,5 +7,5 @@ Edits:
 */
 
 public class AppFactory {
-    System.out.println("I changed something.");
+
 }
