@@ -3,11 +3,12 @@ package stopLight;
 /*
 Edits:
    Ronald 3/4/24: created file
-
 */
 
 import mvc.*;
 import java.awt.Color;
+
+
 
 public class Stoplight extends Model {
     private Color color = Color.GREEN;
@@ -25,4 +26,4 @@ public class Stoplight extends Model {
         changed(); // from Model, sets changed flag and fires changed event
     }
 }
-}
+

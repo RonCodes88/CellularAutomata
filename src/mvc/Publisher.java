@@ -3,8 +3,26 @@ package mvc;
 /*
 Edits:
    Ronald 3/4/24: created file
-
+   Ronald 3/5/24: modified file
 */
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Publisher {
+    private List<Subscriber> observers = new LinkedList<Subscriber>();
+
+    public void subscribe(Subscriber s){
+        observers.add(s);
+    }
+
+    public void unsubscribe(Subscriber s){
+        observers.remove(s);
+    }
+
+    public void notifySubscribers(){
+        for (Subscriber s : observers){
+            s.update();
+        }
+    }
 }
