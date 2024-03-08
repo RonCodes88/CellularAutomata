@@ -6,6 +6,7 @@ Edits:
    Ronald 3/5/24: modified file
 */
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ public abstract class
 Model extends Publisher implements Serializable, PropertyChangeListener {
     private boolean unsavedChanges = false;
     private String fileName = null;
-    private PropertyChangeSupport support;
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void setUnsavedChanges(boolean unsavedChanges) {
         this.unsavedChanges = unsavedChanges;
@@ -34,6 +35,11 @@ Model extends Publisher implements Serializable, PropertyChangeListener {
 
     public void removePropertyChangeListener(PropertyChangeListener listener){
         support.removePropertyChangeListener(listener);
+    }
+
+    public void propertyChange(PropertyChangeEvent event)
+    {
+
     }
 
     public void changed(){

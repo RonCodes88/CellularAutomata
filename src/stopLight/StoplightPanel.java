@@ -7,6 +7,7 @@ Edits:
 */
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import mvc.*;
@@ -20,6 +21,7 @@ public class StoplightPanel extends AppPanel {
         change.addActionListener(this);
         controlPanel.add(change);
     }
+
 
     public static void main(String[] args) {
         AppFactory factory = new StoplightFactory();
