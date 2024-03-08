@@ -15,7 +15,7 @@ Edits:
 
 */
 
-public class AppPanel extends JPanel implements ActionEventListener{
+public class AppPanel extends JPanel implements ActionEventListener {
     private ControlPanel controls;
     private Model model;
     private View view;
