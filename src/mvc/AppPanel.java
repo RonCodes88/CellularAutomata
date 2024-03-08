@@ -12,10 +12,12 @@ import java.io.ObjectOutputStream;
 Edits:
    Ronald 3/4/24: created file
    Yogi 3/6/24: created constructor, inner ControlPanel class and import statements
-
+   Yogi 3/8/24 quick fix: implemented subscriber
 */
 
-public class AppPanel extends JPanel implements ActionEventListener {
+
+
+public class AppPanel extends JPanel implements ActionEventListener, Subscriber{
     private ControlPanel controls;
     private Model model;
     private View view;
