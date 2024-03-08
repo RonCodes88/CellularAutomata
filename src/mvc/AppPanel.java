@@ -15,7 +15,7 @@ Edits:
    Yogi 3/8/24 quick fix: implemented subscriber
 */
 
-public class AppPanel extends JPanel implements ActionEventListener implements Subscriber{
+public class AppPanel extends JPanel implements ActionEventListener, Subscriber{
     private ControlPanel controls;
     private Model model;
     private View view;
