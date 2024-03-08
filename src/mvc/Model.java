@@ -10,15 +10,12 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
-public abstract class Model extends Publisher implements Serializable, PropertyChangeListener {
-    private Model model;
+public abstract class
+Model extends Publisher implements Serializable, PropertyChangeListener {
     private boolean unsavedChanges = false;
     private String fileName = null;
     private PropertyChangeSupport support;
 
-    public Model(Model model){
-        this.model = model;
-    }
     public void setUnsavedChanges(boolean unsavedChanges) {
         this.unsavedChanges = unsavedChanges;
     }
