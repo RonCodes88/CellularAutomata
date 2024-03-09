@@ -14,6 +14,7 @@ Edits:
    Yogi 3/6/24: created constructor, inner ControlPanel class and import statements
    Yogi 3/8/24 quick fix: implemented subscriber
    Caden 3/8/24: updated variable names and altered methods to get stoplight test working
+   Ronald 3/8/24: slightly modified control panel
 */
 
 
@@ -76,6 +77,12 @@ public class AppPanel extends JPanel implements ActionListener, Subscriber{
         frame.setVisible(true);
     }
     public class ControlPanel extends JPanel{
+        public ControlPanel(){
+            setBackground(Color.PINK);
+            JPanel p = new JPanel();
+            add(p);
+        }
+
 
     }
 
