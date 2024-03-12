@@ -16,17 +16,17 @@ public class View extends JPanel implements Subscriber, PropertyChangeListener {
     public View(Model model){
         this.model = model;
         this.model.addPropertyChangeListener(this);
+        model.subscribe(this);
     }
 
-    public void setModel(Model model){
-        model.unsubscribe(this);
-        if (this.model != null){
-            this.model.removePropertyChangeListener(this);
+    public void setModel(Model newModel){
+        if (model != null){
+            model.removePropertyChangeListener(this);
         }
-        this.model = model;
-        this.model.addPropertyChangeListener(this);
-        model.subscribe(this);
-        repaint();
+        this.model = newModel;
+        if (model != null){
+            model.addPropertyChangeListener(this);
+        }
     }
     public void update(){
         repaint();

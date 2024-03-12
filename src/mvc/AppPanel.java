@@ -15,6 +15,7 @@ Edits:
    Yogi 3/8/24 quick fix: implemented subscriber
    Caden 3/8/24: updated variable names and altered methods to get stoplight test working
    Ronald 3/8/24: slightly modified control panel
+   Ronald 3/11/24: modified actionPerformed method to handle different use cases, added setModel method
 */
 
 
@@ -26,17 +27,22 @@ public class AppPanel extends JPanel implements ActionListener, Subscriber{
     protected AppFactory factory;
 
     public AppPanel(AppFactory factory){
+        this.factory = factory;
         this.model = factory.makeModel();
         this.view = factory.makeView(model);
         this.controlPanel = new ControlPanel();
-        this.factory = factory;
+    }
+    public void setModel(Model model){
+
+        this.model = model;
+        view.setModel(model);
     }
 
     protected JMenuBar createMenuBar() {
         JMenuBar result = new JMenuBar();
         JMenu fileMenu = Utilities.makeMenu("File", new String[]{"New", "Save", "Open", "Quit"}, this);
         result.add(fileMenu);
-        JMenu editMenu = Utilities.makeMenu("Edit", new String[]{"RUN1", "RUN50", "POPULATE", "CLEAR"}, this);
+        JMenu editMenu = Utilities.makeMenu("Edit", factory.getEditCommands(), this);
         result.add(editMenu);
         JMenu helpMenu = Utilities.makeMenu("Help", new String[]{"About", "Help"}, this);
         result.add(helpMenu);
@@ -47,9 +53,41 @@ public class AppPanel extends JPanel implements ActionListener, Subscriber{
     {
         try
         {
-            factory.makeEditCommand(model, action.getActionCommand(), this).execute();
+            String cmd = action.getActionCommand();
+
+            if (cmd.equals("Save")){
+                Utilities.save(model, false);
+            }
+            else if (cmd.equals("SaveAs")){
+                Utilities.save(model, true);
+            }
+            else if (cmd.equals("Open")){
+                Model newModel = Utilities.open(model);
+                if(newModel != null){
+                    setModel(newModel);
+                }
+            }
+            else if (cmd.equals("New")){
+                Utilities.saveChanges(model);
+                setModel(factory.makeModel());
+                model.setUnsavedChanges(false);
+            }
+            else if(cmd.equals("Quit")){
+                Utilities.saveChanges(model);
+                System.exit(0);
+            }
+            else if (cmd.equals("About")){
+                Utilities.inform(factory.about());
+            }
+            else if (cmd.equals("Help")){
+                Utilities.inform(factory.getHelp());
+            }
+            else{
+                factory.makeEditCommand(model, cmd, this).execute();
+            }
             update();
         }
+
         catch(Exception e)
         {
             System.out.println(e.getMessage());
@@ -82,8 +120,6 @@ public class AppPanel extends JPanel implements ActionListener, Subscriber{
             JPanel p = new JPanel();
             add(p);
         }
-
-
     }
 
 }

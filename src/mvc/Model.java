@@ -15,7 +15,11 @@ public abstract class
 Model extends Publisher implements Serializable, PropertyChangeListener {
     private boolean unsavedChanges = false;
     private String fileName = null;
-    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private PropertyChangeSupport support;
+
+    public Model(){
+        support = new PropertyChangeSupport(this);
+    }
 
     public void setUnsavedChanges(boolean unsavedChanges) {
         this.unsavedChanges = unsavedChanges;
@@ -39,13 +43,21 @@ Model extends Publisher implements Serializable, PropertyChangeListener {
 
     public void propertyChange(PropertyChangeEvent event)
     {
+        String propertyName = event.getPropertyName();
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+
+        if ("unsavedChanges".equals(propertyName)) {
+            System.out.println("Unsaved changes property changed from " + oldValue + " to " + newValue);
+        } else if ("fileName".equals(propertyName)) {
+            System.out.println("File name property changed from " + oldValue + " to " + newValue);
+        }
 
     }
 
     public void changed(){
         boolean oldValue = getUnsavedChanges();
         setUnsavedChanges(true);
-        support = new PropertyChangeSupport(this);
         support.firePropertyChange("unsavedChanges", oldValue, getUnsavedChanges());
     }
 
