@@ -19,19 +19,25 @@ public class CellView extends JButton implements Subscriber, ActionListener {
     public CellView(Cell myCell)
     {
         this.myCell = myCell;
+        if (myCell != null)
+        {
+            myCell.subscribe(this);
+        }
     }
+
+    public CellView() { this(null); }
 
     public void update()
     {
-        repaint();
+        setBackground(myCell.getColor());
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        setText("" + myCell.getStatus());
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
         myCell.nextState();
-        setBackground(myCell.getColor());
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        setText("" + myCell.getStatus());
+        update();
     }
 }
