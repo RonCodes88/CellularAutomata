@@ -36,7 +36,7 @@ public abstract class Cell extends Publisher implements Serializable {
                 neighborArr[i++] = c;
             }
 
-            int randIndex = new Random().nextInt(neighbors.size());
+            int randIndex = Utilities.rng.nextInt(neighbors.size());
             for (int offset = 0; offset < neighbors.size(); offset++)
             {
                 int index = (randIndex + offset) % neighbors.size(); // Increments starting at randIndex, wrapping to 0 when reaches end of array
