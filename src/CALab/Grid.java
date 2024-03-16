@@ -28,7 +28,7 @@ public abstract class Grid extends Model {
         boolean uniform = true;
         for (int row = 0; row < dim; row++){
             for (int col = 0; col < dim; col++){
-                makeCell(uniform);
+                cells[row][col] = makeCell(uniform);
                 cells[row][col].neighbors = getNeighbors(getCell(row, col), 1);
             }
         }

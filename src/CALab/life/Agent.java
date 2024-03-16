@@ -18,12 +18,13 @@ public class Agent extends Cell {
         return status;
     }
     public void update(){
+        choosePartner();
         if (Society.death.contains(ambience)){
-            this.status = 0;
+            this.status = ambience;
             this.color = Color.RED;
         }
         else if (Society.rebirth.contains(ambience)){
-            this.status = 1;
+            this.status = ambience;
             this.color = Color.GREEN;
         }
     }
@@ -31,11 +32,12 @@ public class Agent extends Cell {
     public void observe(){
         int aliveNeighbors = 0;
         for (Cell c : neighbors){
-            if (((Agent)c).status == 1){
+            if (c != null && ((Agent)c).status == 1){
                 aliveNeighbors++;
             }
         }
         this.ambience = aliveNeighbors;
+        notifySubscribers();
 
     }
 
@@ -43,7 +45,7 @@ public class Agent extends Cell {
         /* leave as blank */
     }
     public void nextState(){
-        status = status+1;
+        status = status + 1;
     }
     // set status to a random or initial value
     public void reset(boolean randomly){
@@ -62,6 +64,7 @@ public class Agent extends Cell {
             this.status = 0;
             this.color = Color.RED;
         }
+        unpartner();
     }
 
     public Color getColor(){

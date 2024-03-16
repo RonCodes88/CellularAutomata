@@ -39,20 +39,20 @@ public abstract class Cell extends Publisher implements Serializable {
 
             int randIndex = Utilities.rng.nextInt(neighbors.size());
 
-            while (neighborArr[randIndex].partner != null){
-                randIndex = Utilities.rng.nextInt(neighbors.size());
-            }
-
-            if (neighborArr[randIndex].partner == null){
-                neighborArr[randIndex].partner = this;
-            }
-            else {
+                for (int offset = 0; offset < neighbors.size(); offset++) {
+                    int index = (randIndex + offset) % neighbors.size(); // Increments starting at randIndex, wrapping to 0 when reaches end of array
+                    if (neighborArr[index].partner == null) {
+                        partner = neighborArr[index];
+                        neighborArr[index].partner = this;
+                        return;
+                    }
+                }
                 System.out.println("Cell's neighbors all already have partners");
             }
 
-        }
-
     }
+
+
 
     public void unpartner() {
         if (partner != null) {

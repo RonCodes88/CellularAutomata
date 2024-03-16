@@ -12,13 +12,7 @@ public class Society extends Grid {
     public static Set<Integer> rebirth = new HashSet<Integer>();
     public static Set<Integer> death = new HashSet<Integer>();
     public static int percentAlive = 50;
-    public static int numOfAgentsAlive;
-
-    public Society(){
-        super();
-        numOfAgentsAlive = dim*dim*(percentAlive/100);
-
-    }
+    public static double numOfAgentsAlive;
 
     static {
         rebirth.add(3);
@@ -30,6 +24,13 @@ public class Society extends Grid {
         death.add(7);
         death.add(8);
     }
+
+    public Society(){
+        super();
+        numOfAgentsAlive = dim*dim*((double)percentAlive/100);
+        System.out.println("The number of agents alive are: " + numOfAgentsAlive);
+    }
+
 
     @Override
     public Cell makeCell(boolean uniform) {

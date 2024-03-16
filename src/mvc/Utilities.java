@@ -111,6 +111,7 @@ public class Utilities {
             ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
             newModel = (Model)is.readObject();
             is.close();
+            System.out.println("Opened: "+fName);
         } catch (Exception err) {
             Utilities.error(err);
         }
