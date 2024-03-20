@@ -10,5 +10,4 @@ public class SocietyFactory extends GridFactory {
         return new Society();
     }
 
-
 }

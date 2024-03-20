@@ -29,6 +29,13 @@ public abstract class Grid extends Model {
         for (int row = 0; row < dim; row++){
             for (int col = 0; col < dim; col++){
                 cells[row][col] = makeCell(uniform);
+                cells[row][col].row = row; //added
+                cells[row][col].col = col; //added
+            }
+        }
+
+        for (int row = 0; row < dim; row++){
+            for (int col = 0; col < dim; col++){
                 cells[row][col].neighbors = getNeighbors(getCell(row, col), 1);
             }
         }
@@ -66,108 +73,15 @@ public abstract class Grid extends Model {
         The asker is not a neighbor of itself.
         */
         Set<Cell> neighbors = new HashSet<>();
-        if (radius == 1 && asker != null) {
-            //handles cells[0][0]
-            if (asker.row == 0 && asker.col == 0) {
-                neighbors.add(cells[dim - 1][dim - 1]);
-                neighbors.add(cells[dim - 1][asker.col]);
-                neighbors.add(cells[dim - 1][asker.col + 1]);
-                neighbors.add(cells[asker.row][dim - 1]);
-                neighbors.add(cells[asker.row][asker.col + 1]);
-                neighbors.add(cells[asker.row + 1][dim - 1]);
-                neighbors.add(cells[asker.row + 1][asker.col]);
-                neighbors.add(cells[asker.row + 1][asker.col + 1]);
-            }
-            //handles cells[0][dim-1]
-            else if (asker.row == 0 && asker.col == (dim - 1)) {
-                neighbors.add(cells[dim - 1][asker.col - 1]);
-                neighbors.add(cells[dim - 1][asker.col]);
-                neighbors.add(cells[dim - 1][0]);
-                neighbors.add(cells[asker.row][asker.col - 1]);
-                neighbors.add(cells[asker.row][0]);
-                neighbors.add(cells[asker.row + 1][asker.col - 1]);
-                neighbors.add(cells[asker.row + 1][asker.col]);
-                neighbors.add(cells[asker.row + 1][0]);
-            }
-            //handles cells[dim-1][0]
-            else if (asker.row == (dim - 1) && asker.col == 0) {
-                neighbors.add(cells[asker.row - 1][dim-1]);
-                neighbors.add(cells[asker.row - 1][asker.col]);
-                neighbors.add(cells[asker.row - 1][asker.col + 1]);
-                neighbors.add(cells[asker.row][dim-1]);
-                neighbors.add(cells[asker.row][asker.col + 1]);
-                neighbors.add(cells[0][dim-1]);
-                neighbors.add(cells[0][asker.col]);
-                neighbors.add(cells[0][asker.col + 1]);
-            }
-            //handles cells[dim-1][dim-1]
-            else if (asker.row == (dim-1) && asker.col == (dim-1)){
-                neighbors.add(cells[asker.row - 1][asker.col - 1]);
-                neighbors.add(cells[asker.row - 1][asker.col]);
-                neighbors.add(cells[asker.row - 1][0]);
-                neighbors.add(cells[asker.row][asker.col - 1]);
-                neighbors.add(cells[asker.row][0]);
-                neighbors.add(cells[0][asker.col - 1]);
-                neighbors.add(cells[0][asker.col]);
-                neighbors.add(cells[0][0]);
-            }
-            //top row cells excluding cells[0][0] and cells[0][dim-1]
-            else if (asker.row == 0) {
-                neighbors.add(cells[dim - 1][asker.col - 1]);
-                neighbors.add(cells[dim - 1][asker.col]);
-                neighbors.add(cells[dim - 1][asker.col + 1]);
-                neighbors.add(cells[asker.row][asker.col - 1]);
-                neighbors.add(cells[asker.row][asker.col + 1]);
-                neighbors.add(cells[asker.row + 1][asker.col - 1]);
-                neighbors.add(cells[asker.row + 1][asker.col]);
-                neighbors.add(cells[asker.row + 1][asker.col + 1]);
-            }
-            //bottom row cells excluding cells[dim-1][0] and cells[dim-1][dim-1]
-            else if (asker.row == (dim - 1)) {
-                neighbors.add(cells[asker.row - 1][asker.col - 1]);
-                neighbors.add(cells[asker.row - 1][asker.col]);
-                neighbors.add(cells[asker.row - 1][asker.col + 1]);
-                neighbors.add(cells[asker.row][asker.col - 1]);
-                neighbors.add(cells[asker.row][asker.col + 1]);
-                neighbors.add(cells[0][asker.col - 1]);
-                neighbors.add(cells[0][asker.col]);
-                neighbors.add(cells[0][asker.col + 1]);
-            }
-            //left most row cells excluding cells[0][0] and cells[dim-1][0]
-            else if (asker.col == 0) {
-                neighbors.add(cells[asker.row - 1][dim - 1]);
-                neighbors.add(cells[asker.row - 1][asker.col]);
-                neighbors.add(cells[asker.row - 1][asker.col + 1]);
-                neighbors.add(cells[asker.row][dim - 1]);
-                neighbors.add(cells[asker.row][asker.col + 1]);
-                neighbors.add(cells[asker.row + 1][dim - 1]);
-                neighbors.add(cells[asker.row + 1][asker.col]);
-                neighbors.add(cells[asker.row + 1][asker.col + 1]);
-
-            }
-            //right most row cells excluding cells[0][dim-1] and cells[dim-1][dim-1]
-            else if (asker.col == (dim - 1)) {
-                neighbors.add(cells[asker.row - 1][asker.col - 1]);
-                neighbors.add(cells[asker.row - 1][asker.col]);
-                neighbors.add(cells[asker.row - 1][0]);
-                neighbors.add(cells[asker.row][asker.col - 1]);
-                neighbors.add(cells[asker.row][0]);
-                neighbors.add(cells[asker.row + 1][asker.col - 1]);
-                neighbors.add(cells[asker.row + 1][asker.col]);
-                neighbors.add(cells[asker.row + 1][0]);
-            }
-            //handles all other cells not on the sides of grid
-            else {
-                neighbors.add(cells[asker.row - 1][asker.col - 1]);
-                neighbors.add(cells[asker.row - 1][asker.col]);
-                neighbors.add(cells[asker.row - 1][asker.col + 1]);
-                neighbors.add(cells[asker.row][asker.col - 1]);
-                neighbors.add(cells[asker.row][asker.col + 1]);
-                neighbors.add(cells[asker.row + 1][asker.col - 1]);
-                neighbors.add(cells[asker.row + 1][asker.col]);
-                neighbors.add(cells[asker.row + 1][asker.col + 1]);
+        for (int i = -radius; i <= radius; i++){
+            for (int j = -radius; j <= radius; j++){
+                if (i == 0 && j == 0) continue;
+                int row = (asker.row + i + dim) % dim;
+                int col = (asker.col + j + dim) % dim;
+                neighbors.add(cells[row][col]);
             }
         }
+
         return neighbors;
     }
 

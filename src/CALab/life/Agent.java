@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Agent extends Cell {
     private int status = 0;
-    private int ambience = 8;
+    private int ambience = 0;
     private Color color = Color.RED;
 
     public Agent(Society society){
@@ -18,7 +18,7 @@ public class Agent extends Cell {
         return status;
     }
     public void update(){
-        choosePartner();
+
         if (Society.death.contains(ambience)){
             this.status = ambience;
             this.color = Color.RED;
@@ -27,6 +27,7 @@ public class Agent extends Cell {
             this.status = ambience;
             this.color = Color.GREEN;
         }
+        notifySubscribers();
     }
 
     public void observe(){
@@ -45,7 +46,17 @@ public class Agent extends Cell {
         /* leave as blank */
     }
     public void nextState(){
-        status = status + 1;
+        if (this.status > 0){
+            this.color = Color.RED;
+            this.ambience = 0;
+            this.status = 0;
+        }
+        else {
+            this.color = Color.GREEN;
+            this.ambience = 1;
+            this.status = 1;
+        }
+
     }
     // set status to a random or initial value
     public void reset(boolean randomly){
