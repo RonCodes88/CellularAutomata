@@ -27,7 +27,7 @@ public class View extends JPanel implements Subscriber {
         this.model.unsubscribe(this);
         this.model = newModel;
         this.model.subscribe(this);
-        repaint();
+//        repaint();
     }
 
     public void update(){
