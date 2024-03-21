@@ -52,7 +52,8 @@ public abstract class Grid extends Model {
                 }
             }
 
-        } else {
+        }
+        else {
             // set the status of each cell to 0 (dead)
             for (int row = 0; row < dim; row++){
                 for (int col = 0; col < dim; col++){

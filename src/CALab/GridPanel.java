@@ -2,7 +2,7 @@ package CALab;
 
 import mvc.AppFactory;
 import mvc.AppPanel;
-
+import java.awt.*;
 
 import javax.swing.*;
 

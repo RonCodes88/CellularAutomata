@@ -22,11 +22,12 @@ public class Agent extends Cell {
         return ambience;
     }
     public void update() {
-        if (status == 1)
+        if (status == 1) {
             if (Society.death.contains(ambience)) {
                 this.status = 0;
                 this.color = Color.RED;
             }
+        }
         else if (status == 0) {
                 if (Society.rebirth.contains(ambience)) {
                     this.status = 1;
