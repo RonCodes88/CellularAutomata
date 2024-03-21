@@ -17,16 +17,22 @@ public class Agent extends Cell {
     public int getStatus(){
         return status;
     }
-    public void update(){
 
-        if (Society.death.contains(ambience)){
-            this.status = ambience;
-            this.color = Color.RED;
-        }
-        else if (Society.rebirth.contains(ambience)){
-            this.status = ambience;
-            this.color = Color.GREEN;
-        }
+    public int getAmbience(){
+        return ambience;
+    }
+    public void update() {
+        if (status == 1)
+            if (Society.death.contains(ambience)) {
+                this.status = 0;
+                this.color = Color.RED;
+            }
+        else if (status == 0) {
+                if (Society.rebirth.contains(ambience)) {
+                    this.status = 1;
+                    this.color = Color.GREEN;
+                }
+            }
         notifySubscribers();
     }
 
@@ -38,7 +44,6 @@ public class Agent extends Cell {
             }
         }
         this.ambience = aliveNeighbors;
-        notifySubscribers();
 
     }
 
@@ -46,26 +51,23 @@ public class Agent extends Cell {
         /* leave as blank */
     }
     public void nextState(){
-        if (this.status > 0){
-            this.color = Color.RED;
-            this.ambience = 0;
-            this.status = 0;
-        }
-        else {
-            this.color = Color.GREEN;
-            this.ambience = 1;
+        if (this.status == 0 && Society.death.contains(status)){
             this.status = 1;
+            this.color = Color.GREEN;
+        }
+        else if (this.status == 1 && Society.death.contains(status)){
+            this.status = 0;
+            this.color = Color.RED;
         }
 
     }
     // set status to a random or initial value
     public void reset(boolean randomly){
         if (randomly) {
-            int randIndex = Utilities.rng.nextInt(2);
-            if (randIndex == 1 && Society.numOfAgentsAlive > 0) {
+            int factor = Utilities.rng.nextInt(100);
+            if (factor < Society.percentAlive) {
                 this.status = 1;
                 this.color = Color.GREEN;
-                Society.numOfAgentsAlive--;
             } else {
                 this.status = 0;
                 this.color = Color.RED;
@@ -74,8 +76,9 @@ public class Agent extends Cell {
         else {
             this.status = 0;
             this.color = Color.RED;
+            this.ambience = 0;
         }
-        unpartner();
+
     }
 
     public Color getColor(){

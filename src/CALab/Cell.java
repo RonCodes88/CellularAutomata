@@ -72,6 +72,8 @@ public abstract class Cell extends Publisher implements Serializable {
 
     // set status to status + 1 mod whatever
     public abstract void nextState();
+    //gets ambience of the cell
+    public abstract int getAmbience();
     // set status to a random or initial value
     public abstract void reset(boolean randomly);
 

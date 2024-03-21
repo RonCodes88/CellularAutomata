@@ -12,7 +12,6 @@ public class Society extends Grid {
     public static Set<Integer> rebirth = new HashSet<Integer>();
     public static Set<Integer> death = new HashSet<Integer>();
     public static int percentAlive = 50;
-    public static double numOfAgentsAlive;
 
     static {
         rebirth.add(3);
@@ -27,8 +26,7 @@ public class Society extends Grid {
 
     public Society(){
         super();
-        numOfAgentsAlive = dim*dim*((double)percentAlive/100);
-        System.out.println("The number of agents alive are: " + numOfAgentsAlive);
+
     }
 
 
